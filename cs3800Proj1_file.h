@@ -1,3 +1,12 @@
+#ifndef CS3800PROJ1_FILE_H
+#define CS3800PROJ1_FILE_H
+
+
+#include <cstring>
+#include <string>
+
+using namespace std;
+
 class file{
     private:
         string permissions;
@@ -11,3 +20,5 @@ class file{
 
 
 };
+
+#endif

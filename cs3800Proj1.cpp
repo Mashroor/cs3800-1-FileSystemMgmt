@@ -1,7 +1,8 @@
 #include <iostream>
 #include <ctime>
 #include <vector>
-using namespace std;
+#include <cstring>
+#include <string>
 
 #include "cs3800Proj1_file.h"
 #include "cs3800Proj1_directory.h"
@@ -9,16 +10,21 @@ using namespace std;
 int main(){
     bool control = true;
     string input;
-    directory root("root");
+    directory currDir("root");
 
     while(control){
-        cout << "user:~" << root.getPath();
-        cin >> input;
+        cout << "user:~" << currDir.getPath();
+        getline(cin, input);
 
-        if(input == "ls"){
-            cout << "poggers lel" << endl;
+        if(input == "pwd"){
+            currDir.pwd();
         }
-
+        if(input == "ls"){
+            currDir.ls();
+        }
+        if(input == "mkdir"){
+            currDir.mkdir("Sicko Mode");
+        }
 
         if(input == "exit" || input == "quit"){
             control = false;
