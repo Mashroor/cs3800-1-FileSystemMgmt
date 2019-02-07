@@ -6,14 +6,14 @@ directory::directory(string name){
             path = path + name + "/";
 }
 
-directory& directory::operator=(directory &newDir){
+directory& directory::operator=(const directory &newDir){
     permissions = newDir.getPermissions();
     userName = newDir.getUserName();
     fileSize = newDir.getFileSize();
     timestamp = newDir.getTimestamp();
     path = newDir.getPath();
     directoryName = newDir.getDirectoryName();
-
+    
     return *this;
 }
 
@@ -26,10 +26,15 @@ void directory::ls(){
         }
     cout << endl;
 }
-void directory::mkdir(std::string newDirName){
+void directory::mkdir(string newDirName){
     directory newDir(newDirName);
     innerDirectories.push_back(newDir);
-
-
+}
+void directory::rmdir(string DirToDel){
+    for(int i = 0; i < innerDirectories.size(); i++){
+        if(innerDirectories[i].getDirectoryName() == DirToDel){
+            innerDirectories.erase(innerDirectories.begin()+ i);
+        }
+    }
 }
 

@@ -23,18 +23,19 @@ class directory{
 
     public:
         directory(string name);
-        directory& operator=(directory &newDir);
+        directory& operator=(const directory &newDir);
 
-        string getPermissions(){return permissions;}
-        string getUserName(){return userName;}
-        int getFileSize(){return fileSize;}
-        string getTimestamp(){return timestamp;}
-        string getPath(){return path;}
-        string getDirectoryName(){return directoryName;}
+        string getPermissions() const{return permissions;}
+        string getUserName() const{return userName;}
+        int getFileSize()const{return fileSize;}
+        string getTimestamp() const{return timestamp;}
+        string getPath() const{return path;}
+        string getDirectoryName() const{return directoryName;}
 
         void pwd();
         void ls();
-        void mkdir(std::string newDirName);
+        void mkdir(string newDirName);
+        void rmdir(string dirToDel);
 
 };
 
