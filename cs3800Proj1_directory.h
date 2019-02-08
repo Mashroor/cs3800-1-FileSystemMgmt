@@ -4,6 +4,8 @@
 #include <vector>
 #include <cstring>
 #include <string>
+#include<ctime>
+#include<chrono>
 #include <iostream>
 #include "cs3800Proj1_file.h"
 
@@ -34,7 +36,9 @@ class directory{
 
         void pwd();
         void ls();
+        void ls_l();
         void mkdir(string newDirName);
+        void touch(string newFileName);
         void rmdir(string dirToDel);
 
 };

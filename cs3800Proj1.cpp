@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
+#include <chrono>
 #include <vector>
 #include <cstring>
 #include <string>
@@ -28,10 +29,17 @@ int main(){
             currDir.pwd();
         }
         if(query[0] == "ls"){
-            currDir.ls();
+            if(query[1] == "-l"){
+                currDir.ls_l();
+            }else{
+                currDir.ls();
+            }
         }
         if(query[0] == "mkdir"){
             currDir.mkdir(query[1]);
+        }
+        if(query[0] == "touch"){
+            currDir.touch(query[1]);
         }
         if(query[0] == "rm"){
             currDir.rmdir(query[1]);

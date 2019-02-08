@@ -24,11 +24,34 @@ void directory::ls(){
     for (int i = 0; i < innerDirectories.size(); i++){
         cout << innerDirectories[i].getDirectoryName() << "\t";
         }
+
+    for (int i = 0; i < innerFiles.size(); i++){
+        cout << innerFiles[i].getFileName() << "\t";
+        }
     cout << endl;
+}
+void directory::ls_l(){
+    for (int i = 0; i < innerDirectories.size(); i++){
+        cout << innerDirectories[i].getDirectoryName() << "\t";
+        }
+
+    for (int i = 0; i < innerFiles.size(); i++){
+        cout << innerFiles[i].getPermissions() << "\t"
+             << innerFiles[i].getUserName() << "\t"
+             << innerFiles[i].getFileSize() << "\t"
+             << innerFiles[i].getTimestamp() << "\t"
+             << innerFiles[i].getFileName() << "\n";
+        }
+    cout << endl;
+
 }
 void directory::mkdir(string newDirName){
     directory newDir(newDirName);
     innerDirectories.push_back(newDir);
+}
+void directory::touch(string newFileName){
+    file newFile(newFileName);
+    innerFiles.push_back(newFile);
 }
 void directory::rmdir(string DirToDel){
     for(int i = 0; i < innerDirectories.size(); i++){
