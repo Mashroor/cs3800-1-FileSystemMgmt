@@ -24,9 +24,10 @@ class file{
         string getPermissions() const{return permissions;}
         string getUserName() const{return userName;}
         int getFileSize() const{return fileSize;}
-
         string getTimestamp() const{return timestamp;}
         string getFileName() const{return fileName;}
+
+        void setTimestamp();
 
 
 };

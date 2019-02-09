@@ -4,6 +4,9 @@ using namespace std;
 directory::directory(string name){
             directoryName = name;
             path = path + name + "/";
+            userName = "root";
+            fileSize = 1024;
+            permissions = "rwxrwxrwx";
 }
 
 directory& directory::operator=(const directory &newDir){
@@ -50,8 +53,16 @@ void directory::mkdir(string newDirName){
     innerDirectories.push_back(newDir);
 }
 void directory::touch(string newFileName){
+    for(int i = 0; i < innerFiles.size(); i++){
+        if(innerFiles[i].getFileName() == newFileName){
+            innerFiles[i].setTimestamp();
+            return;
+        }
+    }
     file newFile(newFileName);
     innerFiles.push_back(newFile);
+    return;
+
 }
 void directory::rmdir(string DirToDel){
     for(int i = 0; i < innerDirectories.size(); i++){

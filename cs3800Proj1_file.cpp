@@ -4,20 +4,19 @@ using namespace std;
 file::file(string name){
             fileName = name;
             path = path + name + "/";
-
-            auto start = chrono::system_clock::now();
-            auto end = chrono::system_clock::now();
-            chrono::duration<double> elapsed_seconds = end-start;
-            time_t end_time = chrono::system_clock::to_time_t(end);
-            
-            timestamp = ctime(&end_time);
-
-
+            setTimestamp();
             userName = "root";
-
-            fileSize = 69;
-
+            fileSize = 1024;
             permissions = "rwxrwxrwx";
+}
+void file::setTimestamp(){
 
+    std::time_t result = std::time(nullptr);
+    char *temp = ctime(&result);
+    if (temp[strlen(temp)-1] == '\n'){
+        temp[strlen(temp)-1] = '\0';
+    }
+    //timestamp =asctime(localtime(&result));
+    timestamp =temp;
 
 }
