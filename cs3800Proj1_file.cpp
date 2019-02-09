@@ -17,5 +17,39 @@ void file::setTimestamp(){
     }
     //timestamp =asctime(localtime(&result));
     timestamp =temp;
-
+}
+void file::setPermissions(string permCode){
+    string tempPermissions;
+    string backupPermissions = permissions;
+    for(int i = 0; i < permCode.length(); i++){
+            if(permCode[i] == '0'){
+                tempPermissions += "---";
+            }
+            if(permCode[i] == '1'){
+                tempPermissions += "--x";
+            }
+            if(permCode[i] == '2'){
+                tempPermissions += "-w-";
+            }
+            if(permCode[i] == '3'){
+                tempPermissions += "-wx";
+            }
+            if(permCode[i] == '4'){
+                tempPermissions += "r--";
+            }
+            if(permCode[i] == '5'){
+                tempPermissions += "r-x";
+            }
+            if(permCode[i] == '6'){
+                tempPermissions += "rw-";
+            }
+            if(permCode[i] == '7'){
+                tempPermissions += "rwx";
+            }
+            if(permCode[i] == '8' || permCode[i] == '9'){
+                permissions = backupPermissions;
+                return;
+            }
+    }
+    permissions = tempPermissions;
 }

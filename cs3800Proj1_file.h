@@ -27,6 +27,7 @@ class file{
         string getFileName() const{return fileName;}
 
         void setTimestamp();
+        void setPermissions(string PermCode);
 };
 
 #endif

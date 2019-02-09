@@ -54,7 +54,9 @@ int main(){
         if(query[0] == "rm"){
             currDirPtr->rmdir(query[1]);
         }
-
+        if(query[0] == "chmod"){
+            currDirPtr->chmod(query[1], query[2]);
+        }
         if(query[0] == "exit" || query[0] == "quit"){
             control = false;
         }

@@ -28,8 +28,38 @@ void directory::setTimestamp(){
     }
     timestamp = temp;
 }
+void directory::setPermissions(string permCode){
+    string tempPermissions;
+    for(int i = 0; i < permCode.length(); i++){
+            if(permCode[i] == '0'){
+                tempPermissions += "---";
+            }
+            if(permCode[i] == '1'){
+                tempPermissions += "--x";
+            }
+            if(permCode[i] == '2'){
+                tempPermissions += "-w-";
+            }
+            if(permCode[i] == '3'){
+                tempPermissions += "-wx";
+            }
+            if(permCode[i] == '4'){
+                tempPermissions += "r--";
+            }
+            if(permCode[i] == '5'){
+                tempPermissions += "r-x";
+            }
+            if(permCode[i] == '6'){
+                tempPermissions += "rw-";
+            }
+            if(permCode[i] == '7'){
+                tempPermissions += "rwx";
+            }
+    }
+    permissions = tempPermissions;
+}
 void directory::cd(){
-    
+
 }
 void directory::pwd(){
     cout << getPath() << endl;
@@ -59,6 +89,20 @@ void directory::ls_l(){
              << innerFiles[i].getFileName() << "\n";
         }
     cout << endl;
+}
+void directory::chmod(string permCode, string dirName){
+    for(int i = 0; i < innerDirectories.size(); i++){
+        if(innerDirectories[i].getDirectoryName() == dirName){
+            innerDirectories[i].setPermissions(permCode);
+            innerDirectories[i].setTimestamp();
+        }
+    }
+    for(int i = 0; i < innerFiles.size(); i++){
+        if(innerFiles[i].getFileName() == dirName){
+            innerFiles[i].setPermissions(permCode);
+            innerFiles[i].setTimestamp();
+        }
+    }    
 }
 void directory::mkdir(string newDirName){
     directory newDir(newDirName);

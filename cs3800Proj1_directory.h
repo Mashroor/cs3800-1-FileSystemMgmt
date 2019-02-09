@@ -33,12 +33,15 @@ class directory{
         string getTimestamp() const{return timestamp;}
         string getPath() const{return path;}
         string getDirectoryName() const{return directoryName;}
+        
         void setTimestamp();
+        void setPermissions(string permCode);
 
         void cd();
         void pwd();
         void ls();
         void ls_l();
+        void chmod(string permCode, string dirName);
         void mkdir(string newDirName);
         void touch(string newFileName);
         void rmdir(string dirToDel);
