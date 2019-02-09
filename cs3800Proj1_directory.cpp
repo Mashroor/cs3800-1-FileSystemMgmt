@@ -4,7 +4,8 @@ using namespace std;
 directory::directory(string name){
             directoryName = name;
             path = path + name + "/";
-            userName = "root";
+            setTimestamp();
+            userName = "user";
             fileSize = 1024;
             permissions = "rwxrwxrwx";
 }
@@ -16,18 +17,27 @@ directory& directory::operator=(const directory &newDir){
     timestamp = newDir.getTimestamp();
     path = newDir.getPath();
     directoryName = newDir.getDirectoryName();
-    
     return *this;
 }
+void directory::setTimestamp(){
 
+    std::time_t result = std::time(nullptr);
+    char *temp = ctime(&result);
+    if (temp[strlen(temp)-1] == '\n'){
+        temp[strlen(temp)-1] = '\0';
+    }
+    timestamp = temp;
+}
+void directory::cd(){
+    
+}
 void directory::pwd(){
     cout << getPath() << endl;
 }
 void directory::ls(){
     for (int i = 0; i < innerDirectories.size(); i++){
-        cout << innerDirectories[i].getDirectoryName() << "\t";
+        cout << innerDirectories[i].getDirectoryName()+ '/' << "\t";
         }
-
     for (int i = 0; i < innerFiles.size(); i++){
         cout << innerFiles[i].getFileName() << "\t";
         }
@@ -35,9 +45,12 @@ void directory::ls(){
 }
 void directory::ls_l(){
     for (int i = 0; i < innerDirectories.size(); i++){
-        cout << innerDirectories[i].getDirectoryName() << "\t";
+        cout << innerDirectories[i].getPermissions() << "\t"
+              << innerDirectories[i].getUserName() << "\t"
+              << innerDirectories[i].getFileSize() << "\t"
+              << innerDirectories[i].getTimestamp() << "\t"
+              << innerDirectories[i].getDirectoryName()+ '/' << "\n";
         }
-
     for (int i = 0; i < innerFiles.size(); i++){
         cout << innerFiles[i].getPermissions() << "\t"
              << innerFiles[i].getUserName() << "\t"
@@ -46,7 +59,6 @@ void directory::ls_l(){
              << innerFiles[i].getFileName() << "\n";
         }
     cout << endl;
-
 }
 void directory::mkdir(string newDirName){
     directory newDir(newDirName);
@@ -62,7 +74,6 @@ void directory::touch(string newFileName){
     file newFile(newFileName);
     innerFiles.push_back(newFile);
     return;
-
 }
 void directory::rmdir(string DirToDel){
     for(int i = 0; i < innerDirectories.size(); i++){

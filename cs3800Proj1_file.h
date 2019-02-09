@@ -17,7 +17,6 @@ class file{
         string timestamp;
         string path;
         string fileName;
-
     public:
         file(string name);
 
@@ -28,8 +27,6 @@ class file{
         string getFileName() const{return fileName;}
 
         void setTimestamp();
-
-
 };
 
 #endif

@@ -33,7 +33,9 @@ class directory{
         string getTimestamp() const{return timestamp;}
         string getPath() const{return path;}
         string getDirectoryName() const{return directoryName;}
+        void setTimestamp();
 
+        void cd();
         void pwd();
         void ls();
         void ls_l();
