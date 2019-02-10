@@ -43,34 +43,42 @@ int main(){
                         }
                     }
                 }
-            }
-            if(query[0] == "pwd"){
-                currDirPtr->pwd();
-            }
-            if(query[0] == "ls"){
-                if(query[1] == "-l"){
-                    currDirPtr->ls_l();
+            }else{
+                if(query[0] == "pwd"){
+                    currDirPtr->pwd();
                 }else{
-                    currDirPtr->ls();
+                    if(query[0] == "ls"){
+                        if(query.size()>1 && query[1] == "-l"){
+                            currDirPtr->ls_l();
+                        }else{
+                            currDirPtr->ls();
+                        }
+                    }else{
+                        if(query[0] == "mkdir"){
+                            currDirPtr->mkdir(query[1]);
+                        }else{
+                            if(query[0] == "touch"){
+                                currDirPtr->touch(query[1]);
+                            }else{
+                                if(query[0] == "rmdir"){
+                                    currDirPtr->rmdir(query[1]);
+                                }else{
+                                    if(query[0] == "chmod"){
+                                        currDirPtr->chmod(query[1], query[2]);
+                                    }else{
+                                        if(query[0] == "exit" || query[0] == "quit"){
+                                            control = false;
+                                        }else{
+                                            cout << "-bash: " << query[0] << ": command not found\n";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            if(query[0] == "mkdir"){
-                currDirPtr->mkdir(query[1]);
-            }
-            if(query[0] == "touch"){
-                currDirPtr->touch(query[1]);
-            }
-            if(query[0] == "rm"){
-                currDirPtr->rmdir(query[1]);
-            }
-            if(query[0] == "chmod"){
-                currDirPtr->chmod(query[1], query[2]);
-            }
-            if(query[0] == "exit" || query[0] == "quit"){
-                control = false;
-            }
         }
-
     }
     return 0;
 }

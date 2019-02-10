@@ -27,6 +27,7 @@ class directory{
     public:
         directory(): parent(nullptr) {};
         directory(string name, directory &newParent);
+        ~directory();
         directory& operator=(const directory &newDir);
 
         string getPermissions() const{return permissions;}
@@ -52,6 +53,7 @@ class directory{
         void mkdir(string newDirName);
         void touch(string newFileName);
         void rmdir(string dirToDel);
+        void rm(string fileToDel);
 
 };
 

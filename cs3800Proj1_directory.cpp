@@ -15,7 +15,11 @@ directory::directory(string name, directory &newParent){
             fileSize = 1024;
             permissions = "rwxrwxrwx";
 }
-
+directory::~directory(){
+    for(int i = 0; i < innerDirectories.size(); i++){
+        delete innerDirectories[i];
+    }
+}
 directory& directory::operator=(const directory &newDir){
     permissions = newDir.getPermissions();
     userName = newDir.getUserName();
@@ -118,6 +122,12 @@ void directory::chmod(string permCode, string dirName){
     }    
 }
 void directory::mkdir(string newDirName){
+    for(int i = 0; i < innerDirectories.size(); i++){
+        if(innerDirectories[i]->getDirectoryName() == newDirName){
+            cout << "mkdir: " << newDirName << ": File exists\n"; 
+            return;
+        }
+    }    
     directory* newDir = new directory(newDirName, *this);
     innerDirectories.push_back(newDir);
 }
@@ -132,10 +142,17 @@ void directory::touch(string newFileName){
     innerFiles.push_back(newFile);
     return;
 }
-void directory::rmdir(string DirToDel){
+void directory::rmdir(string dirToDel){
     for(int i = 0; i < innerDirectories.size(); i++){
-        if(innerDirectories[i]->getDirectoryName() == DirToDel){
+        if(innerDirectories[i]->getDirectoryName() == dirToDel){
             innerDirectories.erase(innerDirectories.begin()+ i);
+        }
+    }
+}
+void directory::rm(string fileToDel){
+    for(int i = 0; i < innerDirectories.size(); i++){
+        if(innerFiles[i].getFileName() == fileToDel){
+            innerFiles.erase(innerFiles.begin()+ i);
         }
     }
 }
