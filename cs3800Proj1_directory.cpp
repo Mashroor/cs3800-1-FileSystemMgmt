@@ -1,9 +1,15 @@
 #include "cs3800Proj1_directory.h"
 using namespace std;
 
-directory::directory(string name){
+directory::directory(string name, directory &newParent){
             directoryName = name;
-            path = path + name + "/";
+            parent = &newParent;
+            if (parent != nullptr){
+                path = parent->getPath() + '/' + directoryName;
+            }
+            else{
+                path = directoryName;
+            }
             setTimestamp();
             userName = "user";
             fileSize = 1024;
@@ -58,15 +64,22 @@ void directory::setPermissions(string permCode){
     }
     permissions = tempPermissions;
 }
-void directory::cd(){
-
+void directory::setParent(directory* newParent){
+    parent = newParent;
+}
+directory* directory::cd(string objName, directory* newParent){
+    for(int i = 0; i < innerDirectories.size(); i++){
+        if(innerDirectories[i]->getDirectoryName() == objName){
+            return innerDirectories[i];
+        }
+    }
 }
 void directory::pwd(){
-    cout << getPath() << endl;
+    cout << getPath() + '/' << endl;
 }
 void directory::ls(){
     for (int i = 0; i < innerDirectories.size(); i++){
-        cout << innerDirectories[i].getDirectoryName()+ '/' << "\t";
+        cout << innerDirectories[i]->getDirectoryName()+ '/' << "\t";
         }
     for (int i = 0; i < innerFiles.size(); i++){
         cout << innerFiles[i].getFileName() << "\t";
@@ -75,11 +88,11 @@ void directory::ls(){
 }
 void directory::ls_l(){
     for (int i = 0; i < innerDirectories.size(); i++){
-        cout << innerDirectories[i].getPermissions() << "\t"
-              << innerDirectories[i].getUserName() << "\t"
-              << innerDirectories[i].getFileSize() << "\t"
-              << innerDirectories[i].getTimestamp() << "\t"
-              << innerDirectories[i].getDirectoryName()+ '/' << "\n";
+        cout << innerDirectories[i]->getPermissions() << "\t"
+              << innerDirectories[i]->getUserName() << "\t"
+              << innerDirectories[i]->getFileSize() << "\t"
+              << innerDirectories[i]->getTimestamp() << "\t"
+              << innerDirectories[i]->getDirectoryName()+ '/' << "\n";
         }
     for (int i = 0; i < innerFiles.size(); i++){
         cout << innerFiles[i].getPermissions() << "\t"
@@ -92,9 +105,9 @@ void directory::ls_l(){
 }
 void directory::chmod(string permCode, string dirName){
     for(int i = 0; i < innerDirectories.size(); i++){
-        if(innerDirectories[i].getDirectoryName() == dirName){
-            innerDirectories[i].setPermissions(permCode);
-            innerDirectories[i].setTimestamp();
+        if(innerDirectories[i]->getDirectoryName() == dirName){
+            innerDirectories[i]->setPermissions(permCode);
+            innerDirectories[i]->setTimestamp();
         }
     }
     for(int i = 0; i < innerFiles.size(); i++){
@@ -105,7 +118,7 @@ void directory::chmod(string permCode, string dirName){
     }    
 }
 void directory::mkdir(string newDirName){
-    directory newDir(newDirName);
+    directory* newDir = new directory(newDirName, *this);
     innerDirectories.push_back(newDir);
 }
 void directory::touch(string newFileName){
@@ -121,7 +134,7 @@ void directory::touch(string newFileName){
 }
 void directory::rmdir(string DirToDel){
     for(int i = 0; i < innerDirectories.size(); i++){
-        if(innerDirectories[i].getDirectoryName() == DirToDel){
+        if(innerDirectories[i]->getDirectoryName() == DirToDel){
             innerDirectories.erase(innerDirectories.begin()+ i);
         }
     }

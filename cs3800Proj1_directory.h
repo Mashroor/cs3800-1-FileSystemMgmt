@@ -4,8 +4,8 @@
 #include <vector>
 #include <cstring>
 #include <string>
-#include<ctime>
-#include<chrono>
+#include <ctime>
+#include <chrono>
 #include <iostream>
 #include "cs3800Proj1_file.h"
 
@@ -13,9 +13,10 @@ using namespace std;
 
 class directory{
     private:
-        vector<directory> innerDirectories;
+        vector<directory*> innerDirectories;
         vector<file> innerFiles;
 
+        directory* parent;
         string permissions;
         string userName;
         int fileSize;
@@ -24,7 +25,8 @@ class directory{
         string directoryName;
 
     public:
-        directory(string name);
+        directory(): parent(nullptr) {};
+        directory(string name, directory &newParent);
         directory& operator=(const directory &newDir);
 
         string getPermissions() const{return permissions;}
@@ -33,11 +35,16 @@ class directory{
         string getTimestamp() const{return timestamp;}
         string getPath() const{return path;}
         string getDirectoryName() const{return directoryName;}
+        int getSize() const{return innerDirectories.size();}
+        directory* getParent() const{return parent;}
+        vector<directory*> getDirectoryVect() const{return innerDirectories;}
         
         void setTimestamp();
+        void setName(string name){directoryName = name;}
         void setPermissions(string permCode);
+        void setParent(directory* newParent);
 
-        void cd();
+        directory* cd(string objName, directory* newParent);
         void pwd();
         void ls();
         void ls_l();

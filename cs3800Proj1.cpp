@@ -12,11 +12,12 @@
 int main(){
     bool control = true;
     string input;
-    directory currDir("root");
+    directory currDir; 
+    currDir.setName("/");
     directory* currDirPtr = &currDir;
 
     while(control){
-    cout << "user:~" << currDirPtr->getPath();
+    cout << "user:~/";
     getline(cin, input);
     istringstream ss(input);
 	string token;
@@ -25,40 +26,49 @@ int main(){
 	while(getline(ss, token, ' ')) {
 		query.push_back(token);
 	}
-        if(query[0] == "cd"){
-            if(query[1] == ".."){
-                if(currDirPtr->getDirectoryName() == "root"){
-                    cout << "cant do that shit faggot\n";
+    if(!query.empty()){
+            if(query[0] == "cd"){
+                if(query[1] == ".."){
+                    if(currDirPtr->getParent() == nullptr){
+                    }
+                    else{
+                            if(currDirPtr->getParent() != nullptr){
+                                currDirPtr = currDirPtr->getParent();
+                            }
+                    }
+                }else{
+                    for(int i = 0; i < currDirPtr->getSize(); i++){
+                        if(query[1] == currDirPtr->getDirectoryVect()[i]->getDirectoryName()){
+                            currDirPtr = currDirPtr->cd(query[1], currDirPtr);
+                        }
+                    }
                 }
-
-            }else{
-                //currDirPtr->cd()
             }
-        }
-        if(query[0] == "pwd"){
-            currDirPtr->pwd();
-        }
-        if(query[0] == "ls"){
-            if(query[1] == "-l"){
-                currDirPtr->ls_l();
-            }else{
-                currDirPtr->ls();
+            if(query[0] == "pwd"){
+                currDirPtr->pwd();
             }
-        }
-        if(query[0] == "mkdir"){
-            currDirPtr->mkdir(query[1]);
-        }
-        if(query[0] == "touch"){
-            currDirPtr->touch(query[1]);
-        }
-        if(query[0] == "rm"){
-            currDirPtr->rmdir(query[1]);
-        }
-        if(query[0] == "chmod"){
-            currDirPtr->chmod(query[1], query[2]);
-        }
-        if(query[0] == "exit" || query[0] == "quit"){
-            control = false;
+            if(query[0] == "ls"){
+                if(query[1] == "-l"){
+                    currDirPtr->ls_l();
+                }else{
+                    currDirPtr->ls();
+                }
+            }
+            if(query[0] == "mkdir"){
+                currDirPtr->mkdir(query[1]);
+            }
+            if(query[0] == "touch"){
+                currDirPtr->touch(query[1]);
+            }
+            if(query[0] == "rm"){
+                currDirPtr->rmdir(query[1]);
+            }
+            if(query[0] == "chmod"){
+                currDirPtr->chmod(query[1], query[2]);
+            }
+            if(query[0] == "exit" || query[0] == "quit"){
+                control = false;
+            }
         }
 
     }
