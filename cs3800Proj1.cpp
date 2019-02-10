@@ -63,13 +63,17 @@ int main(){
                                 if(query[0] == "rmdir"){
                                     currDirPtr->rmdir(query[1]);
                                 }else{
-                                    if(query[0] == "chmod"){
-                                        currDirPtr->chmod(query[1], query[2]);
+                                    if(query[0] == "rm"){
+                                        currDirPtr->rm(query[1]);
                                     }else{
-                                        if(query[0] == "exit" || query[0] == "quit"){
-                                            control = false;
+                                        if(query[0] == "chmod"){
+                                            currDirPtr->chmod(query[1], query[2]);
                                         }else{
-                                            cout << "-bash: " << query[0] << ": command not found\n";
+                                            if(query[0] == "exit" || query[0] == "quit"){
+                                                control = false;
+                                            }else{
+                                                cout << "-bash: " << query[0] << ": command not found\n";
+                                            }
                                         }
                                     }
                                 }

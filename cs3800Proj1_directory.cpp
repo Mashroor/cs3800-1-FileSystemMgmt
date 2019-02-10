@@ -40,6 +40,13 @@ void directory::setTimestamp(){
 }
 void directory::setPermissions(string permCode){
     string tempPermissions;
+    string backupPermissions = permissions;
+    for(int i = 0; i < permCode.length(); i++){
+       if(permCode[i] == '8' || permCode[i] == '9'){
+            cout << "chmod: Invalid file mode: " << permCode <<endl;
+            return;
+        }
+    }
     for(int i = 0; i < permCode.length(); i++){
             if(permCode[i] == '0'){
                 tempPermissions += "---";
@@ -64,6 +71,11 @@ void directory::setPermissions(string permCode){
             }
             if(permCode[i] == '7'){
                 tempPermissions += "rwx";
+            }
+            if(permCode[i] == '8' || permCode[i] == '9'){
+                permissions = backupPermissions;
+                cout << "chmod: Invalid file mode: " << permCode <<endl;
+                return;
             }
     }
     permissions = tempPermissions;
@@ -145,12 +157,13 @@ void directory::touch(string newFileName){
 void directory::rmdir(string dirToDel){
     for(int i = 0; i < innerDirectories.size(); i++){
         if(innerDirectories[i]->getDirectoryName() == dirToDel){
+            delete innerDirectories[i];
             innerDirectories.erase(innerDirectories.begin()+ i);
         }
     }
 }
 void directory::rm(string fileToDel){
-    for(int i = 0; i < innerDirectories.size(); i++){
+    for(int i = 0; i < innerFiles.size(); i++){
         if(innerFiles[i].getFileName() == fileToDel){
             innerFiles.erase(innerFiles.begin()+ i);
         }

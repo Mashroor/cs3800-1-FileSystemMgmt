@@ -48,6 +48,7 @@ void file::setPermissions(string permCode){
             }
             if(permCode[i] == '8' || permCode[i] == '9'){
                 permissions = backupPermissions;
+                cout << "chmod: Invalid file mode: " << permCode <<endl;
                 return;
             }
     }
