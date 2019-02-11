@@ -47,7 +47,7 @@ void file::setPermissions(string permCode){
             if(permCode[i] == '7'){
                 tempPermissions += "rwx";
             }
-            if(permCode[i] > '7'){
+            if(permCode[i] > '7' && permCode[i] < '0'){
                 permissions = backupPermissions;
                 cout << "chmod: Invalid file mode: " << permCode <<endl;
                 return;
