@@ -10,6 +10,7 @@
 
 using namespace std;
 
+//Directory class; this class intends to emulate the directories in linux. This class acts on the base layer for the program.
 class directory{
     private:
         //tracking of inner objects
@@ -29,7 +30,6 @@ class directory{
         directory(): parent(nullptr) {}; //used in mkdir(), to allocate a new directory obj
         directory(string name, directory &newParent); //used for any time a diretory is made
         ~directory(); //since making a new directory, need a way to deref, avoid mem leaking
-        directory& operator=(const directory &newDir);
         //getters, since private
         string getPermissions() const{return permissions;}
         string getUserName() const{return userName;}
@@ -46,7 +46,6 @@ class directory{
         void setTimestamp();
         void setName(string name){directoryName = name;}
         void setPermissions(string permCode);
-        void setParent(directory* newParent);
         //start directory commands
         directory* cd(string objName, directory* newParent);
         void pwd();
