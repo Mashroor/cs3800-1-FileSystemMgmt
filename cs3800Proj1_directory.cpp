@@ -42,7 +42,7 @@ void directory::setPermissions(string permCode){
     string tempPermissions;
     string backupPermissions = permissions;
     for(int i = 0; i < permCode.length(); i++){
-       if(permCode[i] == '8' || permCode[i] == '9'){
+       if(permCode[i] > '8'){
             cout << "chmod: Invalid file mode: " << permCode <<endl;
             return;
         }
@@ -71,11 +71,6 @@ void directory::setPermissions(string permCode){
             }
             if(permCode[i] == '7'){
                 tempPermissions += "rwx";
-            }
-            if(permCode[i] == '8' || permCode[i] == '9'){
-                permissions = backupPermissions;
-                cout << "chmod: Invalid file mode: " << permCode <<endl;
-                return;
             }
     }
     permissions = tempPermissions;

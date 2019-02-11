@@ -15,12 +15,13 @@ void file::setTimestamp(){
     if (temp[strlen(temp)-1] == '\n'){
         temp[strlen(temp)-1] = '\0';
     }
-    //timestamp =asctime(localtime(&result));
     timestamp =temp;
 }
 void file::setPermissions(string permCode){
     string tempPermissions;
     string backupPermissions = permissions;
+
+
     for(int i = 0; i < permCode.length(); i++){
             if(permCode[i] == '0'){
                 tempPermissions += "---";
@@ -46,7 +47,7 @@ void file::setPermissions(string permCode){
             if(permCode[i] == '7'){
                 tempPermissions += "rwx";
             }
-            if(permCode[i] == '8' || permCode[i] == '9'){
+            if(permCode[i] > '8'){
                 permissions = backupPermissions;
                 cout << "chmod: Invalid file mode: " << permCode <<endl;
                 return;

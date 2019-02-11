@@ -11,6 +11,7 @@
 
 int main(){
     bool control = true;
+    bool found;
     string input;
     directory currDir; 
     currDir.setName("/");
@@ -67,7 +68,25 @@ int main(){
                                         currDirPtr->rm(query[1]);
                                     }else{
                                         if(query[0] == "chmod"){
-                                            currDirPtr->chmod(query[1], query[2]);
+                                            found = false;
+                                            for (int i = 0; i < currDirPtr->getSize(); i++){
+                                                if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[2]){
+                                                    currDirPtr->chmod(query[1], query[2]);
+                                                    found = true;
+                                                }
+                                            }
+                                            for (int i = 0; i < currDirPtr->getFilesSize(); i++){
+                                                if(currDirPtr->getFilesVect()[i].getFileName() == query[2]){
+                                                    currDirPtr->chmod(query[1], query[2]);
+                                                    found = true;
+                                                }
+                                            }
+                                            if(found == false){
+                                                cout << "chmod: " 
+                                                     << query[2] 
+                                                     << ": No such file or directory" 
+                                                     << endl;
+                                            }
                                         }else{
                                             if(query[0] == "exit" || query[0] == "quit"){
                                                 control = false;

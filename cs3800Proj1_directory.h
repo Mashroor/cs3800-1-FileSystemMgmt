@@ -37,9 +37,10 @@ class directory{
         string getPath() const{return path;}
         string getDirectoryName() const{return directoryName;}
         int getSize() const{return innerDirectories.size();}
+        int getFilesSize() const{return innerFiles.size();}
         directory* getParent() const{return parent;}
         vector<directory*> getDirectoryVect() const{return innerDirectories;}
-        
+        vector<file> getFilesVect() const{return innerFiles;}
         void setTimestamp();
         void setName(string name){directoryName = name;}
         void setPermissions(string permCode);
