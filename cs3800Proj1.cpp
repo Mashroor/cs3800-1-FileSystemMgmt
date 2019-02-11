@@ -116,22 +116,32 @@ int main(){
                                         if(query[0] == "chmod"){
                                             found = false;
                                             for (int i = 0; i < currDirPtr->getSize(); i++){
-                                                if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[2]){
-                                                    currDirPtr->chmod(query[1], query[2]);
-                                                    found = true;
+                                                if(query.size() > 2){
+                                                    if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[2]){
+                                                        currDirPtr->chmod(query[1], query[2]);
+                                                        found = true;
+                                                    }
                                                 }
                                             }
                                             for (int i = 0; i < currDirPtr->getFilesSize(); i++){
-                                                if(currDirPtr->getFilesVect()[i].getFileName() == query[2]){
-                                                    currDirPtr->chmod(query[1], query[2]);
-                                                    found = true;
+                                                if(query.size() > 2){
+                                                    if(currDirPtr->getFilesVect()[i].getFileName() == query[2]){
+                                                        currDirPtr->chmod(query[1], query[2]);
+                                                        found = true;
+                                                    }
                                                 }
                                             }
-                                            if(found == false){
+                                            if(found == false && query.size() == 3 ){
                                                 cout << "-mash: chmod: " 
                                                      << query[2] 
                                                      << ": No such file or directory" 
                                                      << endl;
+                                            }else{
+                                                if(query.size() < 3){
+                                                    cout << "-mash: chmod "  
+                                                        << ": No such definition of chmod" 
+                                                        << endl;
+                                                }
                                             }
                                         }else{
                                             if(query[0] == "exit" || query[0] == "quit"){
