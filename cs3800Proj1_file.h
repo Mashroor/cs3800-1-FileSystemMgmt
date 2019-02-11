@@ -8,6 +8,7 @@
 
 using namespace std;
 
+//File class; this class serves to emulate stored files in a unix environment. Essentially, this a placeholder with private members
 class file{
     private:
         //inner properties of file class
