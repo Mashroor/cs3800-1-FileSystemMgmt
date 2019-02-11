@@ -20,15 +20,6 @@ directory::~directory(){ //required since we need to allocate in mkdir()
         delete innerDirectories[i];
     }
 }
-directory& directory::operator=(const directory &newDir){
-    permissions = newDir.getPermissions();
-    userName = newDir.getUserName();
-    fileSize = newDir.getFileSize();
-    timestamp = newDir.getTimestamp();
-    path = newDir.getPath();
-    directoryName = newDir.getDirectoryName();
-    return *this;
-}
 void directory::setTimestamp(){ //helper, sets time without a \n from the time_t obj
     time_t result = time(nullptr);
     char *temp = ctime(&result);
@@ -73,9 +64,6 @@ void directory::setPermissions(string permCode){
             }
     }
     permissions = tempPermissions;
-}
-void directory::setParent(directory* newParent){ //helper for mkdir and touch
-    parent = newParent;
 }
 directory* directory::cd(string objName, directory* newParent){
     for(int i = 0; i < innerDirectories.size(); i++){

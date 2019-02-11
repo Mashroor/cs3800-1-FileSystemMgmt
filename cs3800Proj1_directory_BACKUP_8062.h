@@ -30,6 +30,10 @@ class directory{
         directory(): parent(nullptr) {}; //used in mkdir(), to allocate a new directory obj
         directory(string name, directory &newParent); //used for any time a diretory is made
         ~directory(); //since making a new directory, need a way to deref, avoid mem leaking
+<<<<<<< HEAD
+=======
+        
+>>>>>>> testBranch
         //getters, since private
         string getPermissions() const{return permissions;}
         string getUserName() const{return userName;}
@@ -46,6 +50,10 @@ class directory{
         void setTimestamp();
         void setName(string name){directoryName = name;}
         void setPermissions(string permCode);
+<<<<<<< HEAD
+=======
+
+>>>>>>> testBranch
         //start directory commands
 
         //Func: cd(string, directory*)

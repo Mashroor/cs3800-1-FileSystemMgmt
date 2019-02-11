@@ -47,42 +47,14 @@ class directory{
         void setName(string name){directoryName = name;}
         void setPermissions(string permCode);
         //start directory commands
-
-        //Func: cd(string, directory*)
-        //Pre;
-        //Post:
         directory* cd(string objName, directory* newParent);
-        //Func: pwd()
-        //Pre;
-        //Post:
-        void pwd();        
-        //Func: pwd()
-        //Pre;
-        //Post:        
+        void pwd();
         void ls();
-        //Func: ls()
-        //Pre;
-        //Post:  
         void ls_l();
-        //Func: chmod (string0, string1)
-        //Pre;
-        //Post:  
         void chmod(string permCode, string dirName);
-        //Func:mkdir(string)
-        //Pre;
-        //Post:  
         void mkdir(string newDirName);
-        //Func: touch(string)
-        //Pre;
-        //Post:  
         void touch(string newFileName);
-        //Func: rmdir(string)
-        //Pre;
-        //Post:  
         void rmdir(string dirToDel);
-        //Func: rm(string)
-        //Pre;
-        //Post:  
         void rm(string fileToDel);
 
 };
