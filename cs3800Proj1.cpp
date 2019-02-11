@@ -29,20 +29,30 @@ int main(){
 	}
     if(!query.empty()){
             if(query[0] == "cd"){
+                found = false;
                 if(query[1] == ".."){
                     if(currDirPtr->getParent() == nullptr){
+                        found = true;
                     }
                     else{
                             if(currDirPtr->getParent() != nullptr){
                                 currDirPtr = currDirPtr->getParent();
+                                found = true;
                             }
                     }
                 }else{
                     for(int i = 0; i < currDirPtr->getSize(); i++){
                         if(query[1] == currDirPtr->getDirectoryVect()[i]->getDirectoryName()){
                             currDirPtr = currDirPtr->cd(query[1], currDirPtr);
+                            found = true;
                         }
                     }
+                }
+                if(!found){
+                    cout << "-mash: cd: " 
+                         << query[1] 
+                         << ": No such directory" 
+                         << endl;
                 }
             }else{
                 if(query[0] == "pwd"){
@@ -62,10 +72,46 @@ int main(){
                                 currDirPtr->touch(query[1]);
                             }else{
                                 if(query[0] == "rmdir"){
-                                    currDirPtr->rmdir(query[1]);
+                                    found = false;
+                                            for (int i = 0; i < currDirPtr->getSize(); i++){
+                                                if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[2]){
+                                                    currDirPtr->rmdir(query[1]);
+                                                    found = true;
+                                                }
+                                            }
+                                            for (int i = 0; i < currDirPtr->getFilesSize(); i++){
+                                                if(currDirPtr->getFilesVect()[i].getFileName() == query[2]){
+                                                    currDirPtr->rmdir(query[1]);
+                                                    found = true;
+                                                }
+                                            }
+                                            if(found == false){
+                                                cout << "-mash: rmdir: " 
+                                                     << query[1] 
+                                                     << ": No such directory" 
+                                                     << endl;
+                                            }
                                 }else{
                                     if(query[0] == "rm"){
-                                        currDirPtr->rm(query[1]);
+                                        found = false;
+                                            for (int i = 0; i < currDirPtr->getSize(); i++){
+                                                if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[2]){
+                                                    currDirPtr->rm(query[1]);
+                                                    found = true;
+                                                }
+                                            }
+                                            for (int i = 0; i < currDirPtr->getFilesSize(); i++){
+                                                if(currDirPtr->getFilesVect()[i].getFileName() == query[2]){
+                                                    currDirPtr->rm(query[1]);
+                                                    found = true;
+                                                }
+                                            }
+                                            if(found == false){
+                                                cout << "-mash: rm: " 
+                                                     << query[1] 
+                                                     << ": No such file" 
+                                                     << endl;
+                                            }
                                     }else{
                                         if(query[0] == "chmod"){
                                             found = false;
@@ -82,7 +128,7 @@ int main(){
                                                 }
                                             }
                                             if(found == false){
-                                                cout << "chmod: " 
+                                                cout << "-mash: chmod: " 
                                                      << query[2] 
                                                      << ": No such file or directory" 
                                                      << endl;
@@ -91,7 +137,9 @@ int main(){
                                             if(query[0] == "exit" || query[0] == "quit"){
                                                 control = false;
                                             }else{
-                                                cout << "-bash: " << query[0] << ": command not found\n";
+                                                cout << "-mash: " 
+                                                     << query[0]
+                                                     << ": command not found\n";
                                             }
                                         }
                                     }

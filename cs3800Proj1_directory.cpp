@@ -112,7 +112,6 @@ void directory::ls_l(){
              << innerFiles[i].getTimestamp() << "\t"
              << innerFiles[i].getFileName() << "\n";
         }
-    cout << endl;
 }
 void directory::chmod(string permCode, string dirName){
     for(int i = 0; i < innerDirectories.size(); i++){
