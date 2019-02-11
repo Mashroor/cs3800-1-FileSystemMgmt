@@ -2,15 +2,16 @@
 using namespace std;
 
 file::file(string name){
+            //set defaults for file. nothing special
             fileName = name;
             path = path + name + "/";
             setTimestamp();
             userName = "user";
-            fileSize = 1024;
+            fileSize = 1024; //dummy variable. Only for printing
             permissions = "rwxrwxrwx";
 }
-void file::setTimestamp(){
-    std::time_t result = std::time(nullptr);
+void file::setTimestamp(){ //helper, to make timestamp, cut off \n char at end
+    time_t result = time(nullptr);
     char *temp = ctime(&result);
     if (temp[strlen(temp)-1] == '\n'){
         temp[strlen(temp)-1] = '\0';
@@ -18,15 +19,15 @@ void file::setTimestamp(){
     timestamp =temp;
 }
 void file::setPermissions(string permCode){
-    string tempPermissions;
-    string backupPermissions = permissions;
-    for(int i = 0; i < permCode.length(); i++){
+    string tempPermissions; //to be set at end
+    string backupPermissions = permissions; //set so if we have invalid, can replace with prev
+    for(int i = 0; i < permCode.length(); i++){ //check if valid ASCII values, range
        if(permCode[i] < 48 || permCode[i] > 55){
             cout << "chmod: Invalid file mode: " << permCode <<endl;
             return;
         }
     }
-    for(int i = 0; i < permCode.length(); i++){
+    for(int i = 0; i < permCode.length(); i++){ //iterative approach to concat string with perms
             if(permCode[i] == '0'){
                 tempPermissions += "---";
             }

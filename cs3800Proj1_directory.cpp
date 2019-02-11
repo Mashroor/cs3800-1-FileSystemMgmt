@@ -7,15 +7,15 @@ directory::directory(string name, directory &newParent){
             if (parent != nullptr){
                 path = parent->getPath() + '/' + directoryName;
             }
-            else{
+            else{ //this is only really used for the root. everything else made should have a parent
                 path = directoryName;
             }
             setTimestamp();
-            userName = "user";
-            fileSize = 1024;
+            userName = "user"; //arbitrary value, not really important other than printing
+            fileSize = 1024; //arbitrary value, not really important other than printing
             permissions = "rwxrwxrwx";
 }
-directory::~directory(){
+directory::~directory(){ //required since we need to allocate in mkdir()
     for(int i = 0; i < innerDirectories.size(); i++){
         delete innerDirectories[i];
     }
@@ -29,9 +29,8 @@ directory& directory::operator=(const directory &newDir){
     directoryName = newDir.getDirectoryName();
     return *this;
 }
-void directory::setTimestamp(){
-
-    std::time_t result = std::time(nullptr);
+void directory::setTimestamp(){ //helper, sets time without a \n from the time_t obj
+    time_t result = time(nullptr);
     char *temp = ctime(&result);
     if (temp[strlen(temp)-1] == '\n'){
         temp[strlen(temp)-1] = '\0';
@@ -41,7 +40,7 @@ void directory::setTimestamp(){
 void directory::setPermissions(string permCode){
     string tempPermissions;
     string backupPermissions = permissions;
-    for(int i = 0; i < permCode.length(); i++){
+    for(int i = 0; i < permCode.length(); i++){ //check if valid code, parse in range
        if(permCode[i] < 48 || permCode[i] > 55){
             cout << "chmod: Invalid file mode: " << permCode <<endl;
             return;
@@ -75,20 +74,20 @@ void directory::setPermissions(string permCode){
     }
     permissions = tempPermissions;
 }
-void directory::setParent(directory* newParent){
+void directory::setParent(directory* newParent){ //helper for mkdir and touch
     parent = newParent;
 }
 directory* directory::cd(string objName, directory* newParent){
     for(int i = 0; i < innerDirectories.size(); i++){
         if(innerDirectories[i]->getDirectoryName() == objName){
-            return innerDirectories[i];
+            return innerDirectories[i]; //returns a pointer, since most work for cd is in main
         }
     }
 }
-void directory::pwd(){
+void directory::pwd(){ //kind of redundant, but it spits out a path
     cout << getPath() + '/' << endl;
 }
-void directory::ls(){
+void directory::ls(){ //this function is just a pretty print
     for (int i = 0; i < innerDirectories.size(); i++){
         cout << innerDirectories[i]->getDirectoryName()+ '/' << "\t";
         }
@@ -97,7 +96,7 @@ void directory::ls(){
         }
     cout << endl;
 }
-void directory::ls_l(){
+void directory::ls_l(){ //a detailed pretty print. Not special
     for (int i = 0; i < innerDirectories.size(); i++){
         cout << innerDirectories[i]->getPermissions() << "\t"
               << innerDirectories[i]->getUserName() << "\t"
@@ -128,27 +127,27 @@ void directory::chmod(string permCode, string dirName){
     }    
 }
 void directory::mkdir(string newDirName){
-    for(int i = 0; i < innerDirectories.size(); i++){
+    for(int i = 0; i < innerDirectories.size(); i++){ //check existance first
         if(innerDirectories[i]->getDirectoryName() == newDirName){
             cout << "mkdir: " << newDirName << ": File exists\n"; 
             return;
         }
     }    
-    directory* newDir = new directory(newDirName, *this);
+    directory* newDir = new directory(newDirName, *this); //ALLOCATING DATA HERE. MAKE SURE TO DELETE WHEN DEREF
     innerDirectories.push_back(newDir);
 }
 void directory::touch(string newFileName){
-    for(int i = 0; i < innerFiles.size(); i++){
+    for(int i = 0; i < innerFiles.size(); i++){ //update timestamp if existing
         if(innerFiles[i].getFileName() == newFileName){
             innerFiles[i].setTimestamp();
             return;
         }
     }
-    file newFile(newFileName);
+    file newFile(newFileName); //create a new file
     innerFiles.push_back(newFile);
     return;
 }
-void directory::rmdir(string dirToDel){
+void directory::rmdir(string dirToDel){ //removes a directory. destructor is called when out of scope
     for(int i = 0; i < innerDirectories.size(); i++){
         if(innerDirectories[i]->getDirectoryName() == dirToDel){
             delete innerDirectories[i];
@@ -156,7 +155,7 @@ void directory::rmdir(string dirToDel){
         }
     }
 }
-void directory::rm(string fileToDel){
+void directory::rm(string fileToDel){ //removes a file. default destructor called, since no data allocated
     for(int i = 0; i < innerFiles.size(); i++){
         if(innerFiles[i].getFileName() == fileToDel){
             innerFiles.erase(innerFiles.begin()+ i);
