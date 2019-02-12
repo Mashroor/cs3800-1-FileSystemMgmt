@@ -1,3 +1,6 @@
+//file: cs3800Proj1.cpp
+//author: Mashroor Rashid, CS3800 Sec B
+//main executable code, to be compiled
 #include <iostream>
 #include <sstream>
 #include <ctime>
@@ -14,11 +17,11 @@ int main(){
     bool control = true;
     //used for if searching through a vector for an obj
     bool found;
-
     string input;
     directory currDir; //create a new directory, as a base
     currDir.setName("/"); // This is the root, we cant move above this
     directory* currDirPtr = &currDir; //pointer, this will allow us to move between directories via pointing
+    
     //parsing code for user
     while(control){ 
     cout << "user:~" << currDirPtr->getPath() << '/'; //to emulate linux, print this. user is not an actual obj or anything
@@ -70,52 +73,76 @@ int main(){
                         }
                     }else{
                         if(query[0] == "mkdir"){ //allocates a new folder in memory, needs deleting in rmdir
-                            currDirPtr->mkdir(query[1]);
+                            found = false;
+                            for (int i = 0; i < currDirPtr->getSize(); i++){
+                                if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[1]){
+                                    found = true;
+                                }
+                            }
+                            for (int i = 0; i < currDirPtr->getFilesSize(); i++){
+                                if(currDirPtr->getFilesVect()[i].getFileName() == query[1]){
+                                    found = true;
+                                }
+                            }
+                            if(found == true){ //error message if not found
+                                cout << "-mash: mkdir: " 
+                                     << query[1] 
+                                     << ": file or directory exists" 
+                                     << endl;
+                            }else{
+                                currDirPtr->mkdir(query[1]);
+                            }
                         }else{
                             if(query[0] == "touch"){ //create a file. dummy obj
-                                currDirPtr->touch(query[1]);
+                                found = false;
+                                for (int i = 0; i < currDirPtr->getSize(); i++){
+                                    if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[1]){
+                                        found = true;
+                                    }
+                                }
+                                for (int i = 0; i < currDirPtr->getFilesSize(); i++){
+                                    if(currDirPtr->getFilesVect()[i].getFileName() == query[1]){
+                                        found = true;
+                                    }
+                                }
+                                if(found == true){ //error message if not found
+                                    cout << "-mash: touch: " 
+                                         << query[1] 
+                                         << ": file or directory exists" 
+                                         << endl;
+                                }else{
+                                    currDirPtr->touch(query[1]);
+                                }
                             }else{
                                 if(query[0] == "rmdir"){ //remove a directory, needs to call destructor. avoid mem leak
                                     found = false; //search for if directory or file exists first, set false to jump out when found
-                                            for (int i = 0; i < currDirPtr->getSize(); i++){
-                                                if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[2]){
-                                                    currDirPtr->rmdir(query[1]);
-                                                    found = true;
-                                                }
-                                            }
-                                            for (int i = 0; i < currDirPtr->getFilesSize(); i++){
-                                                if(currDirPtr->getFilesVect()[i].getFileName() == query[2]){
-                                                    currDirPtr->rmdir(query[1]);
-                                                    found = true;
-                                                }
-                                            }
-                                            if(found == false){ //error message if not found
-                                                cout << "-mash: rmdir: " 
-                                                     << query[1] 
-                                                     << ": No such directory" 
-                                                     << endl;
-                                            }
+                                    for (int i = 0; i < currDirPtr->getSize(); i++){
+                                        if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[1]){
+                                            currDirPtr->rmdir(query[1]);
+                                            found = true;
+                                        }
+                                    }
+                                    if(found == false){ //error message if not found
+                                        cout << "-mash: rmdir: " 
+                                             << query[1] 
+                                             << ": No such directory" 
+                                             << endl;
+                                    }
                                 }else{
                                     if(query[0] == "rm"){ //for files, nothing special. same search mech
                                         found = false;
-                                            for (int i = 0; i < currDirPtr->getSize(); i++){
-                                                if( currDirPtr->getDirectoryVect()[i]->getDirectoryName() == query[2]){
-                                                    currDirPtr->rm(query[1]);
-                                                    found = true;
-                                                }
+                                        for (int i = 0; i < currDirPtr->getFilesSize(); i++){
+                                            if(currDirPtr->getFilesVect()[i].getFileName() == query[1]){
+                                                currDirPtr->rm(query[1]);
+                                                found = true;
                                             }
-                                            for (int i = 0; i < currDirPtr->getFilesSize(); i++){
-                                                if(currDirPtr->getFilesVect()[i].getFileName() == query[2]){
-                                                    currDirPtr->rm(query[1]);
-                                                    found = true;
-                                                }
-                                            }
-                                            if(found == false){
-                                                cout << "-mash: rm: " 
-                                                     << query[1] 
-                                                     << ": No such file" 
-                                                     << endl;
-                                            }
+                                        }
+                                        if(found == false){
+                                            cout << "-mash: rm: " 
+                                                 << query[1] 
+                                                 << ": No such file" 
+                                                 << endl;
+                                        }
                                     }else{
                                         if(query[0] == "chmod"){ //requires 3 items in query vect. check
                                             found = false;

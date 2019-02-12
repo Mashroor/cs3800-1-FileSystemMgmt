@@ -1,3 +1,6 @@
+//file: cs3800Proj1_directory.cpp
+//author: Mashroor Rashid, CS3800 Sec B
+//Directory class, definititons and code
 #include "cs3800Proj1_directory.h"
 using namespace std;
 

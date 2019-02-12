@@ -1,3 +1,6 @@
+//file: cs3800Proj1_file.cpp
+//author: Mashroor Rashid, CS3800 Sec B
+//File class, definititons and code
 #include "cs3800Proj1_file.h"
 using namespace std;
 
@@ -52,7 +55,6 @@ void file::setPermissions(string permCode){
             if(permCode[i] == '7'){
                 tempPermissions += "rwx";
             }
-
     }
     permissions = tempPermissions;
 }
