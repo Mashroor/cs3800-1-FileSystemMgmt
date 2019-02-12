@@ -93,7 +93,7 @@ void directory::ls_l(){ //a detailed pretty print. Not special
               << innerDirectories[i]->getUserName() << "\t"
               << innerDirectories[i]->getFileSize() << "\t"
               << innerDirectories[i]->getTimestamp() << "\t"
-              << innerDirectories[i]->getDirectoryName()+ '/' << "\n";
+              << BOLDCYAN << innerDirectories[i]->getDirectoryName()+ '/' << RESET << "\n";
         }
     for (int i = 0; i < innerFiles.size(); i++){
         cout << innerFiles[i].getPermissions() << "\t"
