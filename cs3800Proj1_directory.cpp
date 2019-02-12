@@ -89,14 +89,16 @@ void directory::ls(){ //this function is just a pretty print
 }
 void directory::ls_l(){ //a detailed pretty print. Not special
     for (int i = 0; i < innerDirectories.size(); i++){
-        cout << innerDirectories[i]->getPermissions() << "\t"
+        cout << 'd'
+             << innerDirectories[i]->getPermissions() << "\t"
              << innerDirectories[i]->getUserName() << "\t"
              << innerDirectories[i]->getFileSize() << "\t"
              << innerDirectories[i]->getTimestamp() << "\t"
              << BOLDCYAN << innerDirectories[i]->getDirectoryName() << RESET << '/' << "\n";
         }
     for (int i = 0; i < innerFiles.size(); i++){
-        cout << innerFiles[i].getPermissions() << "\t"
+        cout << '-'
+             << innerFiles[i].getPermissions() << "\t"
              << innerFiles[i].getUserName() << "\t"
              << innerFiles[i].getFileSize() << "\t"
              << innerFiles[i].getTimestamp() << "\t"
