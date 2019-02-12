@@ -80,7 +80,7 @@ void directory::pwd(){ //kind of redundant, but it spits out a path
 }
 void directory::ls(){ //this function is just a pretty print
     for (int i = 0; i < innerDirectories.size(); i++){
-        cout << innerDirectories[i]->getDirectoryName()+ '/' << "\t";
+        cout << BOLDCYAN << innerDirectories[i]->getDirectoryName() << RESET <<  '/' << "\t";
         }
     for (int i = 0; i < innerFiles.size(); i++){
         cout << innerFiles[i].getFileName() << "\t";
@@ -90,10 +90,10 @@ void directory::ls(){ //this function is just a pretty print
 void directory::ls_l(){ //a detailed pretty print. Not special
     for (int i = 0; i < innerDirectories.size(); i++){
         cout << innerDirectories[i]->getPermissions() << "\t"
-              << innerDirectories[i]->getUserName() << "\t"
-              << innerDirectories[i]->getFileSize() << "\t"
-              << innerDirectories[i]->getTimestamp() << "\t"
-              << BOLDCYAN << innerDirectories[i]->getDirectoryName()+ '/' << RESET << "\n";
+             << innerDirectories[i]->getUserName() << "\t"
+             << innerDirectories[i]->getFileSize() << "\t"
+             << innerDirectories[i]->getTimestamp() << "\t"
+             << BOLDCYAN << innerDirectories[i]->getDirectoryName() << RESET << '/' << "\n";
         }
     for (int i = 0; i < innerFiles.size(); i++){
         cout << innerFiles[i].getPermissions() << "\t"

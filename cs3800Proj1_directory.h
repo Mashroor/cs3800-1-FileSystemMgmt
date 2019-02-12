@@ -3,8 +3,8 @@
 //Directory class; this class intends to emulate the directories in linux. This class acts on the base layer for the program.
 #ifndef CS3800PROJ1_DIRECTORY_H
 #define CS3800PROJ1_DIRECTORY_H
-#define BOLDCYAN "\003[1m\033[36m"
-#define RESET "\003[0m"
+#define BOLDCYAN "\033[1m\033[36m"
+#define RESET "\033[0m"
 #include <vector>
 #include <cstring>
 #include <string>

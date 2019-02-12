@@ -4,10 +4,13 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
-#include <chrono>
 #include <vector>
 #include <cstring>
 #include <string>
+#include <cctype>
+
+#define BOLDCYAN "\033[1m\033[36m"
+#define RESET "\033[0m"
 
 #include "cs3800Proj1_file.h"
 #include "cs3800Proj1_directory.h"
@@ -24,7 +27,7 @@ int main(){
     
     //parsing code for user
     while(control){ 
-    cout << "user:~" << currDirPtr->getPath() << '/'; //to emulate linux, print this. user is not an actual obj or anything
+    cout << BOLDCYAN << "user:~" << RESET << currDirPtr->getPath() << "$ "; //to emulate linux, print this. user is not an actual obj or anything
     getline(cin, input);
     istringstream ss(input);
 	string token;
