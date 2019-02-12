@@ -100,15 +100,10 @@ int main(){
                                         found = true;
                                     }
                                 }
-                                for (int i = 0; i < currDirPtr->getFilesSize(); i++){
-                                    if(currDirPtr->getFilesVect()[i].getFileName() == query[1]){
-                                        found = true;
-                                    }
-                                }
                                 if(found == true){ //error message if not found
                                     cout << "-mash: touch: " 
                                          << query[1] 
-                                         << ": file or directory exists" 
+                                         << ": directory exists" 
                                          << endl;
                                 }else{
                                     currDirPtr->touch(query[1]);
